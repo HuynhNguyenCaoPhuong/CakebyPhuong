@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-y=0wqb!ylz^j-!0@144g9+1z$i$@_70if#n3&obd(9*f*rl*&d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -81,12 +81,8 @@ WSGI_APPLICATION = 'CakebyPhuong.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_pycopg2',
-        'NAME': 'CakebyPhuong',
-        'USER': 'postgres',
-        'PASSWORD': '1508',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
