@@ -1,0 +1,276 @@
+{% extends 'classes/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Home | Trang chủ{% endblock title %}
+{% block content %}
+    <!-- Carousel Start -->
+    <div class="container-fluid p-0 pb-5 mb-5">
+        <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#header-carousel" data-slide-to="1"></li>
+                <li data-target="#header-carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active" style="height: 500px;">
+                    <img class="position-relative w-100" src="{% static 'img/danish.jpeg' %}" style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-md-3">Khóa học làm bánh online</h5>
+                            <h1 class="display-3 text-white mb-md-4">Nền tảng học làm bánh online tốt nhất</h1>
+                            <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="height: 500px;">
+                    <img class="position-relative w-100" src="{% static 'img/macaroon.jpg' %}" style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-md-3">Phân loại bánh theo các mục</h5>
+                            <h1 class="display-3 text-white mb-md-4">Đa dạng nội dung làm bánh</h1>
+                            <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" style="height: 500px;">
+                    <img class="position-relative w-100" src="{% static 'img/chocolate-cake-slice.jpg' %}" style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-white text-uppercase mb-md-3">Trải nghiệm tốt nhất</h5>
+                            <h1 class="display-3 text-white mb-md-4">Nội dung chi tiết và chi phí phải chăng</h1>
+                            <a href="" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Xem thêm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'img/stawberry-tiramisu.jpg' %}" alt="">
+                </div>
+                <div class="col-lg-7">
+                    <div class="text-left mb-4">
+                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Lời giới thiệu</h5>
+                        <h1>Chào mừng đến với CakebyPhuong</h1>
+                    </div>
+                    <p>Vào một ngày đẹp trời của tháng 12/2021, mình cảm thấy cần thay đổi một chút gì đó cho cuộc sống trở nên màu sắc hơn, vậy là CakebyPhuong ra đời. CakebyPhuong là nơi mà mình thoả mãn đam mê bánh trái và cũng là nơi mình gặp gỡ, trao đổi, lan toả niềm vui bánh trái với mọi người cùng chung đam mê trên khắp quả đất xinh đẹp này.</p>
+                    <a href="{% url 'classes:about' %}" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Xem thêm</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Category Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Danh mục bánh</h5>
+                <h1>Khám phá các loại bánh đầy hương vị</h1>
+            </div>
+            <div class="row">
+                {% for cat in cats %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
+                        <img class="img-fluid" style="height:171px"src="{{ cat.img.url }}" alt="">
+                        <a class="cat-overlay text-white text-decoration-none" href="{% url 'classes:index' %}category/{{ cat.slug }}">
+                            <h4 class="text-white font-weight-medium">{{ cat.name }}</h4>
+                            <span>{{ cat.courses }} khóa học</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Category Start -->
+
+
+    <!-- Courses Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Các khóa học</h5>
+                <h1>Các khóa học được yêu thích</h1>
+            </div>
+            <div class="row">
+                {% for course in recent_courses %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2">
+                        <img class="img-fluid" src="{{ course.image_course.url }}" alt="{{ course.name }}">
+                        <div class="bg-secondary p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>35 học viên</small>
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>07m22s</small>
+                            </div>
+                            <a class="h5 font-weight-bold" href="{% url 'classes:index' %}single/{{ course.id }}">{{ course.name }}</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    {% if course.price|floatformat:0|intcomma == "0" %}
+                                        <h5 class="m-0">Miễn phí</h5>
+                                    {% else %}
+                                        <h5 class="m-0">{{ course.price|floatformat:0|intcomma }} VNĐ</h5>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Courses End -->
+
+    
+    <!-- Team Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Giảng viên</h5>
+                <h1>Đội ngũ giảng viên chuyên nghiệp, tận tâm</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 text-center team mb-4">
+                    <div class="team-item rounded overflow-hidden mb-2">
+                        <div class="team-img position-relative">
+                            <img class="img-fluid" src="{% static 'img/avatar.jpg' %}" alt="avatar">
+                            <div class="team-social">
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="bg-secondary p-4">
+                            <h5>Nam Phương</h5>
+                            <p class="m-0">Founder</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 text-center team mb-4">
+                    <div class="team-item rounded overflow-hidden mb-2">
+                        <div class="team-img position-relative">
+                            <img class="img-fluid" src="{% static 'img/avatar-2.jpg' %}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="bg-secondary p-4">
+                            <h5>Lê Sanh Bảo</h5>
+                            <p class="m-0">Giảng viên</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 text-center team mb-4">
+                    <div class="team-item rounded overflow-hidden mb-2">
+                        <div class="team-img position-relative">
+                            <img class="img-fluid" src="{% static 'img/avatar-3.jpg' %}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="bg-secondary p-4">
+                            <h5>Đoàn Huỳnh Sang</h5>
+                            <p class="m-0">Giảng viên</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 text-center team mb-4">
+                    <div class="team-item rounded overflow-hidden mb-2">
+                        <div class="team-img position-relative">
+                            <img class="img-fluid" src="{% static 'img/avatar-4.jpg' %}" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-light btn-square mx-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="bg-secondary p-4">
+                            <h5>Đặng Hoàng Nhân</h5>
+                            <p class="m-0">Giảng viên</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+
+
+    <!-- Testimonial Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Feedback</h5>
+                <h1>Nhận xét của các học viên</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="owl-carousel testimonial-carousel">
+                        <div class="text-center">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <h5 class="font-weight-normal mb-4">Cảm ơn CakebyPhuong rất nhiều vì những chia sẻ rất nghiêm túc, chính xác, đầy trách nhiệm và yêu thương. Làm theo sự hướng dẫn của bạn mình bị cuốn theo cảm xúc của người hướng dẫn khiến việc làm bánh đối với mình là trải nghiệm niềm hạnh phúc, vui vẻ.</h5>
+                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-2.jpg' %}" alt="">
+                            <h6 class="m-0">Trần Thị Hạnh</h6>
+                            <!-- <span>Thành viên 01 năm</span> -->
+                        </div>
+                        <div class="text-center">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <h5 class="font-weight-normal mb-4">Nhờ có blog của chị mà mình học hỏi được rất nhiều, nhờ cách diễn giải chi tiết mà một người chưa biết gì về bánh như mình cũng có thể làm được. Em cảm thấy càng ngày càng bị cuốn hút với những công thức của chị.</h5>
+                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-1.jpg' %}" alt="">
+                            <h6 class="m-0">Nguyễn Thị Ngọc</h6>
+                            <!-- <span>Profession</span> -->
+                        </div>
+                        <div class="text-center">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <h5 class="font-weight-normal mb-4">Rất cảm ơn em về những chia sẻ vô cùng tỉ mỉ trong các công thức bánh. Càng hâm mộ hơn khi đọc những dòng này vì chị cảm thấy em không chỉ giỏi giang mà còn có một tâm hồn thật đẹp nữa. </h5>
+                            <img class="img-fluid mx-auto mb-3" src="{% static 'img/testimonial-3.jpg' %}" alt="">
+                            <h6 class="m-0">Huỳnh Công Nến</h6>
+                            <!-- <span>Profession</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+
+    <!-- Blog Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Blog</h5>
+                <h1>Chia sẻ các mẹo vặt hay khi làm bánh</h1>
+            </div>
+            <div class="row pb-3">
+                {% for blog in recent_blogs %}
+                <div class="col-lg-4 mb-4">
+                    <div class="blog-item position-relative overflow-hidden rounded mb-2">
+                        <img class="img-fluid" src="{{ blog.image_blog.url }}" alt="{{ blog.name }}">
+                        <a class="blog-overlay text-decoration-none" href="{% url 'classes:index' %}tip/{{ blog.id }}">
+                            <h5 class="text-white mb-3">{{ blog.name }}</h5>
+                            <p class="text-primary m-0">{{ blog.public_day|date:"d-m-Y" }}</p>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% extends 'classes/base.html' %}
+{% load static %}
+{% block tittle %}Blog Detail | Chia sẻ chi tiết {% endblock tittle %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">{{ blog.name }}</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Blog</p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">{{ blog.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <!-- Recent Post -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bài viết mới</h3>
+                        {% for blog in recent_blogs %}
+                        <a class="d-flex align-items-center text-decoration-none mb-3" href="{% url 'classes:index' %}tip/{{ blog.id }}">
+                            <img class="img-fluid rounded" style="width: 80px" src="{{ blog.image_blog.url }}" alt="{{ blog.name }}">
+                            <div class="pl-3">
+                                <h6 class="m-1">{{ blog.name }}</h6>
+                                <small style="padding-left: 3px">{{ blog.public_day|date:"d-m-Y" }}</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tag Cloud -->
+                    <!-- <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag Cloud</h3>
+                        <div class="d-flex flex-wrap m-n1">
+                            <a href="" class="btn btn-outline-primary m-1">Design</a>
+                            <a href="" class="btn btn-outline-primary m-1">Development</a>
+                            <a href="" class="btn btn-outline-primary m-1">Marketing</a>
+                            <a href="" class="btn btn-outline-primary m-1">SEO</a>
+                            <a href="" class="btn btn-outline-primary m-1">Writing</a>
+                            <a href="" class="btn btn-outline-primary m-1">Consulting</a>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="col-lg-8">
+                    <div class="mb-5">
+                        {% if blog.video == "" or blog.video is blank %}
+                        <div></div>
+                        {% else %}
+                            <div class="text-center mb-5">
+                                <iframe width="700" height="450" src="https://www.youtube.com/embed/{{ blog.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            {% endif %}
+                            {{ blog.describe|safe }}
+                        <h6 class="text-primary font-italic mb-3">Ngày viết: {{ blog.public_day|date:"d-m-Y" }}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Comment List -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Bình luận</h3>
+                        {% for comment in comments %}
+                        <div class="media mb-4">
+                            <img src="{{ comment.user_avatar.url }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                style="width: 45px;">
+                            <div class="media-body">
+                                <h6>{{ comment.user_last_name }} {{ comment.user_first_name }}  <small><i>{{ comment.created_at }}</i></small></h6>
+                                <p>{{ comment.content }}</p>
+                                <!-- <button class="btn btn-sm btn-secondary">Trả lời</button> -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if request.user.username %}
+                    <!-- Comment Form -->
+                    <div class="bg-secondary rounded p-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bình luận</h3>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.content }}
+                                <input type="hidden" name="blog" value="{{ blog.id }}">
+                                <input type="hidden" name="user" value="{{ request.user.id }}">
+                                <input type="hidden" name="user_first_name" value="{{ request.user.first_name }}">
+                                <input type="hidden" name="user_last_name" value="{{ request.user.last_name }}">
+                                <input type="hidden" name="user_avatar" value="{{ request.user.customer.avatar }}">
+                            </div>
+                            <div class="form-group mb-0">
+                                <button type="submit" value="submit" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold" name="button-submit">Gửi</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Detail End -->
+
+
+{% endblock content %}

@@ -1,0 +1,85 @@
+{% extends 'classes/base.html' %}
+{% block title %}Login | Đăng nhập{% endblock %}
+{% load static %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Đăng ký</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Đăng ký</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Login Start -->
+    <div class="container-fluid bg-registration py-5" style="margin: 90px 0;">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                    <div class="mb-4">
+                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Đăng ký khóa học làm bánh</h5>
+                        <h1 class="text-white">Giảm 30% cho học viên mới</h1>
+                    </div>
+                    <p class="text-white">Sau khi đăng kí và đóng học phí, bạn sẽ được tham gia nhóm lớp học của CakebyPhuong. Các bài giảng đã được quay video, biên tập đẹp, rõ nét, rất chi tiết, cụ thể và được xếp theo thứ tự bài từ cơ bản đến nâng cao.</p>
+                    <p class="text-white">Bạn có thể học bất kỳ lục nào miễn là có kết nối Internet và chỉ đóng học phí một lần, bạn sẽ được xem bài giảng trọn đời.</p>
+                    <ul class="list-inline text-white m-0">
+                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Thời gian linh hoạt</li>
+                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Thanh toán một lần</li>
+                        <li class="py-2"><i class="fa fa-check text-primary mr-3"></i>Hỗ trợ hỏi đáp qua nhóm cộng đồng Facebook</li>
+                    </ul>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card border-0">
+                        <div class="card-header bg-light text-center p-4">
+                            <h1 class="m-0">Đăng ký ngay</h1>
+                        </div>
+                        <div class="card-body rounded-bottom bg-primary p-5">
+                            <form method="post" autocomplete="off">
+                                {% csrf_token %}
+                                {{ result|safe }}
+                                <div class="form-group">
+                                    {{ form_user.last_name }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_user.first_name }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_user.username }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_user.email }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_customer.tel }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_customer.facebook }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_user.password }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_user.confirm_password }}
+                                </div>
+                                <div class="form-group">
+                                    {{ form_customer.address }}
+                                </div>
+                                <div>
+                                    <button class="btn btn-dark btn-block border-0 py-3" type="submit" name="btnSignup" value="Signup">Đăng ký</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+{% endblock content %}

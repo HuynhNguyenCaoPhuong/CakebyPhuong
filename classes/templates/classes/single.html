@@ -1,0 +1,166 @@
+{% extends 'classes/base.html' %}
+{% load static %}
+{% block tittle %}Course Detail | Khóa học chi tiết {% endblock tittle %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">{{ course.name }}</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}category/{{ category.slug }}">{{ category.name }}</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">{{ course.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="mb-5">
+                        {% if course.video == "" %}
+                        <div></div>
+                        {% else %}
+                            <div class="text-center mb-5">
+                                <iframe width="700" height="450" src="https://www.youtube.com/embed/{{ course.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            {% endif %}
+                            {{ course.describe|safe }}
+                        <h6 class="text-primary font-italic mb-3">Ngày viết: {{ course.public_day|date:"d-m-Y" }}</h6>
+                        <!-- 
+                        <h1 class="mb-5">Cách làm bánh pie táo</h1>
+                        <img class="img-fluid rounded w-100 mb-4" src="{% static 'img/apple-pie-1.jpg' %}" alt="Image">
+                        <p>Đây là công thức tối giản nhất của dòng bánh này giúp mọi người ai cũng có thể làm được nhé. Với lớp vỏ giòn, thơm bơ, phần nhân táo mềm, thơm quế thêm nam việt quất chua chua khá hợp với thời tiết dở dở ương ương này lắm nè</p>
+                        <h2 class="mb-4">Công thức:</h2>
+                        <img class="img-fluid rounded w-50 float-left mr-4 mb-3" src="{% static 'img/apple-pie-2.jpg' %}" alt="Image">
+                        <p class="text-primary font-weight-bold">Phần nhân táo:</p>
+                        <p>- 300gr thịt táo (nếu táo sạch có thể giữ vỏ không cần gọt, mùi táo sẽ thơm hơn, mn nên dùng thêm ít táo xanh để có thêm vị chua nhẹ nha)</p>
+                        <p>- 45gr đường nâu</p>
+                        <p>- 5gr nước cốt chanh</p>
+                        <p>- 20gr bơ lạt</p>
+                        <p>- 100gr nước lọc</p>
+                        <p>- 5gr bột mì (hoặc bắp)</p>
+                        <img class="img-fluid rounded w-50 float-right mr-4 mb-3" src="{% static 'img/apple-pie-4.jpg' %}" alt="Image">
+                        <p>- 2-3gr bột quế (vị quế khá nồng sẽ có một số bạn không thích, mn có thể điều chỉnh theo khẩu vị nha)</p>
+                        <p>- 1gr muối</p>
+                        <p>- 50gr nam việt quất</p>
+                        <p>=> Thịt táo cắt hạt lựu, cho đường, nước, nước chanh, bơ, muối vào đun sệt lại.</p>
+                        <p>=> Khuấy bột với ít nước cho tan rồi cho vào nhân táo, cho thêm bột quế <p>=> đun cho sệt là được</p>
+                        <img class="img-fluid rounded w-50 float-left mr-4 mb-3" src="{% static 'img/apple-pie-3.jpg' %}" alt="Image">
+                        <p class="text-primary font-weight-bold">Đế tart:</p>
+                        <p>- 200gr bột mì</p>
+                        <p>- 60gr bơ lạt</p>
+                        <p>- 1 quả trứng</p>
+                        <p>- 60gr đường bột</p>
+                        <p>- 2gr muối</p>
+                        <p>=> Bơ lạt để mềm ở nhiệt độ phòng</p>
+                        <p>=> Trộn bột mì, bơ lạt, trứng, đường bột, muối thành 1 khối</p>
+                        <p>=> Để bột nghỉ trong tủ mát 10'-20' để bột hơi cứng lại dễ cán hơn</p>
+                        <p>=> Cán bột dày 3-5mm, cho vào khuôn tart</p>
+                        <p>=> Cho nhân táo vào đế tart, cán bột đan lưới trên bề mặt bánh.</p>
+                        <p>=> Dùng 1 lòng đỏ đánh tan quét lên mặt bánh</p>
+                        <p>=> Bật lò 190 độ trước 15'. Nướng bánh ở nhiệt độ 190 độ trong 30'.</p></p>
+                        <p class="text-primary font-weight-bold font-italic">Bảo quản: 3 ngày tủ mát</p> -->
+                    </div>
+
+                    <!-- Comment List -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Bình luận</h3>
+                        {% for comment in comments %}
+                        <div class="media mb-4">
+                            <img src="{{ comment.user_avatar.url }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                style="width: 45px;">
+                            <div class="media-body">
+                                <h6>{{ comment.user_last_name }} {{ comment.user_first_name }}  <small><i>{{ comment.created_at }}</i></small></h6>
+                                <p>{{ comment.content }}</p>
+                                <!-- <button class="btn btn-sm btn-secondary">Trả lời</button> -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% if request.user.username %}
+                    <!-- Comment Form -->
+                    <div class="bg-secondary rounded p-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bình luận</h3>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.content }}
+                                <input type="hidden" name="course" value="{{ course.id }}">
+                                <input type="hidden" name="user" value="{{ request.user.id }}">
+                                <input type="hidden" name="user_first_name" value="{{ request.user.first_name }}">
+                                <input type="hidden" name="user_last_name" value="{{ request.user.last_name }}">
+                                <input type="hidden" name="user_avatar" value="{{ request.user.customer.avatar }}">
+                            </div>
+                            <div class="form-group mb-0">
+                                <button type="submit" value="submit" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold" name="button-submit">Gửi</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <!-- Author Bio -->
+                    <div class="d-flex flex-column text-center bg-dark rounded mb-5 py-5 px-4">
+                        <img src="{% static 'img/avatar.jpg' %}" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
+                        <h3 class="text-primary mb-3">Nam Phương</h3>
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag Cloud</h3>
+                        <p class="text-white m-0">Một thợ làm bánh kem đam mê với khả năng chế biến các loại bánh đa dạng. Luôn cố gắng tạo ra những chiếc bánh đẹp mắt và ngon miệng, đảm bảo chất lượng.</p>
+                    </div>
+
+                    <!-- Category List -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Danh mục</h3>
+                        <ul class="list-group list-group-flush">
+                            {% for cat in cats %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="{% url 'classes:index' %}category/{{ cat.slug }}" class="text-decoration-none h6 m-0">{{ cat.name }}</a>
+                                <span class="badge badge-primary badge-pill">{{ cat.courses }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <!-- Recent Post -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bài viết mới</h3>
+                        {% for course in recent_courses %}
+                        <a class="d-flex align-items-center text-decoration-none mb-3" href="{% url 'classes:index' %}single/{{ course.id }}">
+                            <img class="img-fluid rounded" style="width: 80px" src="{{ course.image_course.url }}" alt="{{ course.name }}">
+                            <div class="pl-3">
+                                <h6 class="m-1">{{ course.name }}</h6>
+                                <small style="padding-left: 3px">{{ course.public_day|date:"d-m-Y" }}</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tag Cloud -->
+                    <!-- <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag Cloud</h3>
+                        <div class="d-flex flex-wrap m-n1">
+                            <a href="" class="btn btn-outline-primary m-1">Design</a>
+                            <a href="" class="btn btn-outline-primary m-1">Development</a>
+                            <a href="" class="btn btn-outline-primary m-1">Marketing</a>
+                            <a href="" class="btn btn-outline-primary m-1">SEO</a>
+                            <a href="" class="btn btn-outline-primary m-1">Writing</a>
+                            <a href="" class="btn btn-outline-primary m-1">Consulting</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Detail End -->
+
+
+{% endblock content %}

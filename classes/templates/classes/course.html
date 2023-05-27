@@ -1,0 +1,103 @@
+{% extends 'classes/base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}Premium Courses | Khóa học cao cấp{% endblock title %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Khóa học làm bánh</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Khóa học</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Search Form -->
+    <div class="col-lg-12 mt-5 mt-lg-0">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Tìm kiếm</h5>
+            </div>
+            <div class="mb-5">
+                <form method="get" action="{% url 'classes:search_course' %}">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-lg" placeholder="Tìm kiếm khóa học" name="course_name" value="{{ course_name }}">
+                        <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Start -->
+    <div class="container-fluid py-5">
+        <div class="container pt-5 pb-3">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Danh mục bánh</h5>
+                <h1>Khám phá các loại bánh đầy hương vị</h1>
+            </div>
+            <div class="row">
+                {% for cat in cats %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="cat-item position-relative overflow-hidden rounded mb-2">
+                        <img class="img-fluid" style="height:171px"src="{{ cat.img.url }}" alt="">
+                        <a class="cat-overlay text-white text-decoration-none" href="{% url 'classes:index' %}category/{{ cat.slug }}">
+                            <h4 class="text-white font-weight-medium">{{ cat.name }}</h4>
+                            <span>{{ cat.courses }} khóa học</span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Category Start -->
+
+
+    <!-- Courses Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Các khóa học</h5>
+                <h1>Các khóa học được yêu thích</h1>
+            </div>
+            <div class="row">
+                {% for course in recent_courses %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2">
+                        <img class="img-fluid" src="{{ course.image_course.url }}" alt="{{ course.name }}">
+                        <div class="bg-secondary p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>35 học viên</small>
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>07m22s</small>
+                            </div>
+                            <a class="h5 font-weight-bold" href="{% url 'classes:index' %}single/{{ course.id }}">{{ course.name }}</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    {% if course.price|floatformat:0|intcomma == "0" %}
+                                        <h5 class="m-0">Miễn phí</h5>
+                                    {% else %}
+                                        <h5 class="m-0">{{ course.price|floatformat:0|intcomma }} VNĐ</h5>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Courses End -->
+{% endblock content %}
