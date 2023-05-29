@@ -40,6 +40,7 @@ class FormComment(forms.ModelForm):
         'rows' : '8',
         'required' : 'required',
     }))
+    image = forms.ImageField(label="Hình ảnh")
 
     class Meta:
         model = Comment
@@ -53,6 +54,7 @@ class FormBlogcomment(forms.ModelForm):
         'rows' : '8',
         'required' : 'required',
     }))
+    image = forms.ImageField(label="Hình ảnh")
 
     class Meta:
         model = Blogcomment

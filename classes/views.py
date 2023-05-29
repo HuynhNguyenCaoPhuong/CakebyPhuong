@@ -55,7 +55,7 @@ def single(request, id):
     
     form = FormComment()
     if request.POST.get('button-submit'):
-        form = FormComment(request.POST, Comment)
+        form = FormComment(request.POST, request.FILES, Comment)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.course = course
@@ -64,6 +64,7 @@ def single(request, id):
             comment.user_last_name = request.user.last_name
             comment.user_avatar = request.user.customer.avatar
             comment.content = form.cleaned_data['content']
+            comment.image = request.FILES['image']
             comment.save()
             return redirect('classes:single', id=course.id)
 
