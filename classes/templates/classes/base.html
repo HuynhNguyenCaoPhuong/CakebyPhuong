@@ -87,7 +87,7 @@
                                 {% if request.user.username %}
                                 <button type="button" class="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block dropdown-toggle" data-toggle="dropdown">{{ request.user.last_name }} {{ request.user.first_name }}</button>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="#" style="text-decoration: none">
+                                    <a href="{% url 'users:my-account' %}" style="text-decoration: none">
                                         <button class="dropdown-item" type="button">Tài khoản của tôi</button>
                                     </a>
                                     <a href="{% url 'users:logout' %}" style="text-decoration: none">

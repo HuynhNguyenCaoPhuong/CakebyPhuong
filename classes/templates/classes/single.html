@@ -29,8 +29,8 @@
                         {% if course.video == "" %}
                         <div></div>
                         {% else %}
-                            <div class="text-center mb-5">
-                                <iframe width="700" height="450" src="https://www.youtube.com/embed/{{ course.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive embed-responsive-16by9" src="https://www.youtube.com/embed/{{ course.video }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                             </div>
                             {% endif %}
                             {{ course.describe|safe }}

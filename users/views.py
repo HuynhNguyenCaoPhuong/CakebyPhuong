@@ -97,21 +97,44 @@ def my_account(request):
         messages.warning(request,"Vui lòng đăng nhập lại.")
         return redirect('users:login')
     
-    
     if request.POST.get('btnUpdateUser'):
         ho = request.POST.get('last_name')
         ten = request.POST.get('first_name')
         dt = request.POST.get('mobile')
         mail = request.POST.get('email')
+        facebook = request.POST.get('facebook')
         dc = request.POST.get('address')
 
         s_customer = request.user
         customer = Customer.objects.get(user__id=s_customer.id)
-        customer.user.last_name = ho
-        customer.user.first_name = ten
-        customer.user.email = mail
-        customer.tel = dt
-        customer.address = dc
+
+        if 'avatar' in request.FILES:
+            customer.avatar = request.FILES['avatar']
+        if ho == "":
+            customer.user.last_name =  customer.user.last_name
+        else:
+            customer.user.last_name = ho
+        if ten == "":
+            customer.user.first_name = customer.user.first_name
+        else:
+            customer.user.first_name = ten
+        if mail == "":
+            customer.user.email = customer.user.email
+        else:
+            customer.user.email = mail
+        if dt == "":
+            customer.tel = customer.tel
+        else:
+            customer.tel = dt
+        if dc == "":
+            customer.address = customer.address
+        else:
+            customer.address = dc
+        if facebook == "":
+            customer.facebook = customer.facebook
+        else:
+            customer.facebook = facebook
+
         customer.save()
         customer.user.save()
 
@@ -151,26 +174,7 @@ def my_account(request):
                 </div>
                 '''
     
-    # cart = Cart(request)
-    # orders = Order.objects.filter(username=request.user.username)
-    # dict_orders = {}
-    # for order in orders:
-    #     items = list(OrderItem.objects.filter(order=order.id).values())
-    #     for item in items:
-    #         product = Product.objects.get(id=item['product_id'])
-    #         item['product_name'] = product.name
-    #         item['product_image'] = product.image_product
-    #         item['total_price'] = order.total
-    #     else:
-    #         dict_orders_items = {
-    #             order.id: items
-    #         }
-    #         dict_orders.update(dict_orders_items)
-            
     return render(request, 'users/my_account.html',{
         'cats': cats,
         'result': result,
-        # 'cart': cart,
-        # 'orders': orders,
-        # 'dict_orders': dict_orders,
     })
