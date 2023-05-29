@@ -33,42 +33,10 @@
                                 <iframe class="embed-responsive embed-responsive-16by9" src="https://www.youtube.com/embed/{{ course.video }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                             </div>
                             {% endif %}
-                            {{ course.describe|safe }}
+                            <div class="ckeditor-content">
+                                {{ course.describe|safe }}
+                            </div>
                         <h6 class="text-primary font-italic mb-3">Ngày viết: {{ course.public_day|date:"d-m-Y" }}</h6>
-                        <!-- 
-                        <h1 class="mb-5">Cách làm bánh pie táo</h1>
-                        <img class="img-fluid rounded w-100 mb-4" src="{% static 'img/apple-pie-1.jpg' %}" alt="Image">
-                        <p>Đây là công thức tối giản nhất của dòng bánh này giúp mọi người ai cũng có thể làm được nhé. Với lớp vỏ giòn, thơm bơ, phần nhân táo mềm, thơm quế thêm nam việt quất chua chua khá hợp với thời tiết dở dở ương ương này lắm nè</p>
-                        <h2 class="mb-4">Công thức:</h2>
-                        <img class="img-fluid rounded w-50 float-left mr-4 mb-3" src="{% static 'img/apple-pie-2.jpg' %}" alt="Image">
-                        <p class="text-primary font-weight-bold">Phần nhân táo:</p>
-                        <p>- 300gr thịt táo (nếu táo sạch có thể giữ vỏ không cần gọt, mùi táo sẽ thơm hơn, mn nên dùng thêm ít táo xanh để có thêm vị chua nhẹ nha)</p>
-                        <p>- 45gr đường nâu</p>
-                        <p>- 5gr nước cốt chanh</p>
-                        <p>- 20gr bơ lạt</p>
-                        <p>- 100gr nước lọc</p>
-                        <p>- 5gr bột mì (hoặc bắp)</p>
-                        <img class="img-fluid rounded w-50 float-right mr-4 mb-3" src="{% static 'img/apple-pie-4.jpg' %}" alt="Image">
-                        <p>- 2-3gr bột quế (vị quế khá nồng sẽ có một số bạn không thích, mn có thể điều chỉnh theo khẩu vị nha)</p>
-                        <p>- 1gr muối</p>
-                        <p>- 50gr nam việt quất</p>
-                        <p>=> Thịt táo cắt hạt lựu, cho đường, nước, nước chanh, bơ, muối vào đun sệt lại.</p>
-                        <p>=> Khuấy bột với ít nước cho tan rồi cho vào nhân táo, cho thêm bột quế <p>=> đun cho sệt là được</p>
-                        <img class="img-fluid rounded w-50 float-left mr-4 mb-3" src="{% static 'img/apple-pie-3.jpg' %}" alt="Image">
-                        <p class="text-primary font-weight-bold">Đế tart:</p>
-                        <p>- 200gr bột mì</p>
-                        <p>- 60gr bơ lạt</p>
-                        <p>- 1 quả trứng</p>
-                        <p>- 60gr đường bột</p>
-                        <p>- 2gr muối</p>
-                        <p>=> Bơ lạt để mềm ở nhiệt độ phòng</p>
-                        <p>=> Trộn bột mì, bơ lạt, trứng, đường bột, muối thành 1 khối</p>
-                        <p>=> Để bột nghỉ trong tủ mát 10'-20' để bột hơi cứng lại dễ cán hơn</p>
-                        <p>=> Cán bột dày 3-5mm, cho vào khuôn tart</p>
-                        <p>=> Cho nhân táo vào đế tart, cán bột đan lưới trên bề mặt bánh.</p>
-                        <p>=> Dùng 1 lòng đỏ đánh tan quét lên mặt bánh</p>
-                        <p>=> Bật lò 190 độ trước 15'. Nướng bánh ở nhiệt độ 190 độ trong 30'.</p></p>
-                        <p class="text-primary font-weight-bold font-italic">Bảo quản: 3 ngày tủ mát</p> -->
                     </div>
 
                     <!-- Comment List -->
@@ -163,4 +131,4 @@
     <!-- Detail End -->
 
 
-{% endblock content %}
+{% endblock content %}    
