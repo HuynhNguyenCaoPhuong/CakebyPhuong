@@ -77,11 +77,11 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav py-0">
-                                <a href="{% url 'classes:index' %}" class="nav-item nav-link active">Trang chủ</a>
-                                <a href="{% url 'classes:about' %}" class="nav-item nav-link">Giới thiệu</a>
-                                <a href="{% url 'classes:course' %}" class="nav-item nav-link">Khóa học làm bánh</a>
-                                <a href="{% url 'classes:blog' %}" class="nav-item nav-link">Blog</a>
-                                <a href="{% url 'classes:contact' %}" class="nav-item nav-link">Liên hệ</a>
+                                <a href="{% url 'classes:index' %}" class="nav-item nav-link {% if request.path == '/' %}active{% endif %}">Trang chủ</a>
+                                <a href="{% url 'classes:about' %}" class="nav-item nav-link {% if "about" in request.path %}active{% endif %}">Giới thiệu</a>
+                                <a href="{% url 'classes:course' %}" class="nav-item nav-link {% if "course" in request.path %}active{% endif %}">Khóa học làm bánh</a>
+                                <a href="{% url 'classes:blog' %}" class="nav-item nav-link {% if "blog" in request.path %}active{% endif %}">Blog</a>
+                                <a href="{% url 'classes:contact' %}" class="nav-item nav-link {% if "contact" in request.path %}active{% endif %}">Liên hệ</a>
                             </div>
                             <div class="dropdown">
                                 {% if request.user.username %}
