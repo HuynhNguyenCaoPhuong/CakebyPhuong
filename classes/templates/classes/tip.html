@@ -72,7 +72,7 @@
                 <div class="col-lg-12">
                     <!-- Comment List -->
                     <div class="mb-5">
-                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Bình luận</h3>
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">{{ comment_number }} Bình luận</h3>
                         {% for comment in comments %}
                         <div class="media mb-4">
                             <img src="{{ comment.user_avatar.url }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
@@ -82,6 +82,11 @@
                                 <p>{{ comment.content }}</p>
                                 <!-- <button class="btn btn-sm btn-secondary">Trả lời</button> -->
                             </div>
+                            {% if comment.image %}
+                                <img src="{{ comment.image.url }}" alt="Image" class="img-fluid" style="height: 67px">
+                            {% else %}
+                                <div></div>
+                            {% endif %}
                         </div>
                         {% endfor %}
                     </div>
@@ -89,7 +94,7 @@
                     <!-- Comment Form -->
                     <div class="bg-secondary rounded p-5">
                         <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bình luận</h3>
-                        <form method="post">
+                        <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
                                 {{ form.content }}
@@ -100,7 +105,10 @@
                                 <input type="hidden" name="user_avatar" value="{{ request.user.customer.avatar }}">
                             </div>
                             <div class="form-group mb-0">
-                                <button type="submit" value="submit" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold" name="button-submit">Gửi</button>
+                                <div style="width: 210px; margin-top: 6px; display: inline-block">
+                                    {{ form.image }}
+                                </div>
+                                <button type="submit" value="submit" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold" name="button-submit" style="float: right">Gửi</button>
                             </div>
                         </form>
                     </div>

@@ -1,0 +1,7 @@
+{% autoescape off %}
+Xin chào mừng đến với CakebyPhuong,
+
+Vui lòng click vào đường link dưới đây để xác nhận tài khoản:
+
+{{ protocol }}://{{ domain }}{% url 'users:activate' uidb64=uid token=token %}
+{% endautoescape %}

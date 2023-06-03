@@ -40,11 +40,11 @@ class FormComment(forms.ModelForm):
         'rows' : '8',
         'required' : 'required',
     }))
-    image = forms.ImageField(label="Hình ảnh")
+    image = forms.ImageField(label="Hình ảnh", required=None)
 
     class Meta:
         model = Comment
-        exclude = ('user_avatar',)
+        exclude = ('user_avatar', 'image',)
 
 
 class FormBlogcomment(forms.ModelForm):
@@ -54,8 +54,8 @@ class FormBlogcomment(forms.ModelForm):
         'rows' : '8',
         'required' : 'required',
     }))
-    image = forms.ImageField(label="Hình ảnh")
+    image = forms.ImageField(label="Hình ảnh", required=None)
 
     class Meta:
         model = Blogcomment
-        exclude = ('user_avatar',)
+        exclude = ('user_avatar', 'image',)

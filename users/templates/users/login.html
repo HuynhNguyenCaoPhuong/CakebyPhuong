@@ -38,11 +38,14 @@
                                 {% csrf_token %}
                                 {{ result|safe }}
                                 <div class="form-group">
-                                    <input class="form-control border-0 p-4" type="text" name= "email" placeholder="E-mail / Tên đăng nhập">
+                                    <input class="form-control border-0 p-4" type="text" name= "email" placeholder="Username / Tên đăng nhập">
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control border-0 p-4" type="password" name= "password" placeholder="Mật khẩu">
                                 </div>
+                                <small class="text-right d-block mb-2">
+                                    <a href="{% url 'users:password_reset' %}" class="text-white">Quên mật khẩu?</a>
+                                </small>
                                 <!-- <div class="form-group">
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="custom-control-input" id="newaccount">

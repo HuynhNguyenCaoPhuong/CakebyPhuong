@@ -27,6 +27,15 @@ class CourseAdmin(admin.ModelAdmin):
         return 'Yes'
     
 
+@admin.register(models.PaidCourses)
+class PaidCoursesAdmin(admin.ModelAdmin):
+    ordering = ['username']
+    list_display = ['created', 'username', 'course']
+    search_fields = ['username__istartswith']
+    list_editable = ['username', 'course']
+    list_filter = ['created']
+    
+
 @admin.register(models.Blog)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ['name']
@@ -39,3 +48,46 @@ class BlogAdmin(admin.ModelAdmin):
         if blog.public_day == 0:
             return 'No'
         return 'Yes'
+    
+
+@admin.register(models.Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['user_first_name', 'content']
+    list_filter = ['created_at']
+    search_fields = ['user_first_name__istartswith']
+    list_per_page = 10
+
+    @admin.display(ordering='created_at')
+    def date_status(self, comment):
+        if comment.created_at == 0:
+            return 'No'
+        return 'Yes'
+    
+
+@admin.register(models.Blogcomment)
+class BlogcommentAdmin(admin.ModelAdmin):
+    list_display = ['user_first_name', 'content']
+    list_filter = ['created_at']
+    search_fields = ['user_first_name__istartswith']
+    list_per_page = 10
+
+    @admin.display(ordering='created_at')
+    def date_status(self, blogcomment):
+        if blogcomment.created_at == 0:
+            return 'No'
+        return 'Yes'
+    
+
+@admin.register(models.Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['name', 'subject', 'message']
+    list_filter = ['id']
+    search_fields = ['name__istartswith']
+    list_per_page = 10
+
+    @admin.display(ordering='id')
+    def date_status(self, contact):
+        if contact.id == 0:
+            return 'No'
+        return 'Yes'
+        

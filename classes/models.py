@@ -28,13 +28,14 @@ class Course(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=500)
     price = models.FloatField(default=0.0)
-    price_origin = models.FloatField(null=True)
+    price_origin = models.FloatField(null=True, default=0.0)
     video = models.CharField(max_length=500, null=True, blank=True)
     image_course = models.ImageField(upload_to='store/img', default='store/img/img_coming_soon.png')
     is_free = models.BooleanField(default=True)
     describe = RichTextUploadingField(null=True, blank=True)
     public_day = models.DateTimeField(auto_now_add=True)
-    viewed = models.IntegerField(default=0)
+    time = models.CharField(max_length=100, default='10 phút')
+    students = models.IntegerField(default=0)
     vote = models.FloatField(null=True, blank=True, default=5)
     star = models.TextField(default='<small class="fa fa-star text-primary mr-1"></small><small class="fa fa-star text-primary mr-1"></small><small class="fa fa-star text-primary mr-1"></small><small class="fa fa-star text-primary mr-1"></small><small class="fa fa-star text-primary mr-1"></small>')
 
@@ -48,12 +49,34 @@ class Course(models.Model):
             'price': str(self.price), 
         }
     
+    def update_students_count(self):
+        self.students = PaidCourses.objects.filter(course=self).count()
+        self.save()
+    
     def save(self, *args, **kwargs):
         super(Course, self).save(*args, **kwargs)
         self.category.update_courses_count()
 
     class Meta:
         ordering = ('-public_day',)
+
+
+class PaidCourses(models.Model):
+    username = models.CharField(max_length=50, null=False)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    tel = models.CharField(max_length=20, null=False)
+    address = models.CharField(max_length=500)
+    course = models.ForeignKey(Course, on_delete=models.PROTECT)
+    name_course = models.CharField(max_length=300, null=False)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        super(PaidCourses, self).save(*args, **kwargs)
+        self.course.update_students_count()
+
+    def __str__(self):
+        return str(self.id)
 
 
 class Blog(models.Model):

@@ -41,7 +41,7 @@
 
                     <!-- Comment List -->
                     <div class="mb-5">
-                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">3 Bình luận</h3>
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">{{ comment_number }} Bình luận</h3>
                         {% for comment in comments %}
                         <div class="media mb-4">
                             <img src="{{ comment.user_avatar.url }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"

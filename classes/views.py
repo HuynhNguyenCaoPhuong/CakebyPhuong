@@ -7,9 +7,11 @@ from . form import FormContact, FormComment, FormBlogcomment
 
 cats = Category.objects.all()
 
+
 def index(request):
     recent_courses = Course.objects.all()[:6]
     recent_blogs = Blog.objects.all()[:6]
+
     return render(request, 'classes/index.html',{
         'cats': cats,
         'recent_courses': recent_courses,
@@ -51,6 +53,7 @@ def single(request, id):
     recent_courses = Course.objects.all()[:3]
 
     comments = Comment.objects.filter(course=course)
+    comment_number = comments.count()
 
     
     form = FormComment()
@@ -64,7 +67,8 @@ def single(request, id):
             comment.user_last_name = request.user.last_name
             comment.user_avatar = request.user.customer.avatar
             comment.content = form.cleaned_data['content']
-            comment.image = request.FILES['image']
+            if 'image' in request.FILES:
+                comment.image = request.FILES['image']
             comment.save()
             return redirect('classes:single', id=course.id)
 
@@ -75,6 +79,7 @@ def single(request, id):
         'recent_courses': recent_courses,
         'comments': comments,
         'form': form,
+        'comment_number': comment_number,
     })
 
 
@@ -100,11 +105,12 @@ def tip(request, id):
 
 
     comments = Blogcomment.objects.filter(blog=blog)
+    comment_number = comments.count()
 
     
     form = FormBlogcomment()
     if request.POST.get('button-submit'):
-        form = FormBlogcomment(request.POST, Blogcomment)
+        form = FormBlogcomment(request.POST, request.FILES, Blogcomment)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.blog = blog
@@ -113,6 +119,8 @@ def tip(request, id):
             comment.user_last_name = request.user.last_name
             comment.user_avatar = request.user.customer.avatar
             comment.content = form.cleaned_data['content']
+            if 'image' in request.FILES:
+                comment.image = request.FILES['image']
             comment.save()
             return redirect('classes:tip', id=blog.id)
 
@@ -122,6 +130,7 @@ def tip(request, id):
         'recent_blogs': recent_blogs,
         'comments': comments,
         'form': form,
+        'comment_number': comment_number,
     })
 
 

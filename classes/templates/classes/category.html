@@ -55,13 +55,13 @@
                         <img class="img-fluid" src="{{ subject.image_course.url }}" alt="">
                         <div class="bg-secondary p-4">
                             <div class="d-flex justify-content-between mb-3">
-                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>35 học viên</small>
-                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>07m22s</small>
+                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>{{ subject.students }} học viên</small>
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>{{ subject.time }}</small>
                             </div>
                             <a class="h5 font-weight-bold" href="{% url 'classes:index' %}single/{{ subject.id }}">{{ subject.name }}</a>
                             <div class="border-top mt-4 pt-4">
                                 <div class="d-flex justify-content-between">
-                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6>
+                                    <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{ subject.vote }} <small></small></h6>
                                     {% if subject.price|floatformat:0|intcomma == "0" %}
                                         <h5 class="m-0">Miễn phí</h5>
                                     {% else %}

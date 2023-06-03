@@ -11,6 +11,9 @@
         <!-- Favicon -->
         <link rel="icon" type="image/x-icon" href="{% static 'classes/img/cropped-CbP.jpg' %}">
 
+        <!-- JQuery -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
         <!-- Google Web Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,6 +115,39 @@
             </div>
         </div>
         <!-- Navbar End -->
+
+        <div>{{ messages.tags }}</div>
+        <!-- Pop up alert -->
+        {% if messages %}
+            <div class="modal fade" id="login-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Thông báo</h5>
+                        </div>
+                        <div class="modal-body">
+                            {% for message in messages %}
+                                {% if 'success' in message.tags %}
+                                    <div class="alert alert-success">{{ message }}</div>
+                                {% elif 'warning' in message.tags %}
+                                    <div class="alert alert-warning">{{ message }}</div>
+                                {% elif 'error' in message.tags %}
+                                    <div class="alert alert-danger">{{ message }}</div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    $('#login-modal').modal('show');
+                });
+            </script>
+        {% endif %}
 
         {% block content %}
         

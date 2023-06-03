@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordResetForm
 from . models import Customer
 
 
@@ -58,3 +59,8 @@ class FormCustomer(forms.ModelForm):
     class Meta:
         model = Customer
         exclude = ('user', 'avatar')
+
+
+class PasswordResetForm(PasswordResetForm):
+    def __init__(self, *args, **kwargs):
+        super(PasswordResetForm, self).__init__(*args, **kwargs)
