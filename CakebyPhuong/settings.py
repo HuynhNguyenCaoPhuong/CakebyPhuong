@@ -82,8 +82,12 @@ WSGI_APPLICATION = 'CakebyPhuong.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'CakebyPhuongDB',     # Tên cơ sở dữ liệu
+        'USER': 'tendangnhap',  # Tên đăng nhập MySQL
+        'PASSWORD': 'matkhau',  # Mật khẩu MySQL
+        'HOST': 'localhost',  # Địa chỉ máy chủ MySQL, có thể là 'localhost' hoặc '127.0.0.1'
+        'PORT': '3306',       # Cổng MySQL, mặc định là '3306'
     }
 }
 
