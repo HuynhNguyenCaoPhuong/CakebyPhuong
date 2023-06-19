@@ -69,19 +69,6 @@ def user_signup(request):
             # Gửi email xác nhận
             activateEmail(request, user, form_user.cleaned_data.get('email'))
 
-            result = '''
-                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                        </symbol>
-                    </svg>
-                    <div class="alert alert-success d-flex align-items-center" role="alert">
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
-                        <div>
-                            Bạn đã đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản của bạn. Nếu bạn không thấy email trong hộp thư đến của mình, hãy kiểm tra thư mục spam hoặc thư rác của bạn.
-                        </div>
-                    </div>
-                '''
         else:
             if 'username' in form_user.errors:
                 result = '''
@@ -125,7 +112,7 @@ def activateEmail(request, user, to_email):
         customer = Customer.objects.get(user=user)
         customer.token = account_activation_token.make_token(user)
         customer.save()
-        messages.success(request, f'Xin chào {user}, Vui lòng kiểm tra email  {to_email} để xác nhận tài khoản của bạn. Lưu ý: Nếu bạn không thấy email trong hộp thư đến của mình, hãy kiểm tra thư mục spam hoặc thư rác của bạn.')
+        messages.success(request, f'Xin chào {user}, Vui lòng kiểm tra email {to_email} để xác nhận tài khoản của bạn. Lưu ý: Nếu bạn không thấy email trong hộp thư đến của mình, hãy kiểm tra thư mục spam hoặc thư rác của bạn.')
     else:
         messages.error(request, f'Có vấn đề trong việc gửi email đến {to_email}, vui lòng kiểm tra lại.')
 

@@ -1,7 +1,7 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-# from users.models import User
+from users.models import Customer
 from ckeditor_uploader.fields import RichTextUploadingField
 from datetime import datetime
 
@@ -22,6 +22,9 @@ class Category(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Category,self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name_plural = "Danh mục bánh"
 
 
 class Course(models.Model):
@@ -59,24 +62,33 @@ class Course(models.Model):
 
     class Meta:
         ordering = ('-public_day',)
+        verbose_name_plural = "Khóa học bánh"
 
 
 class PaidCourses(models.Model):
     username = models.CharField(max_length=50, null=False)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    tel = models.CharField(max_length=20, null=False)
-    address = models.CharField(max_length=500)
+    first_name = models.CharField(max_length=50, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    tel = models.CharField(max_length=20, null=True, blank=True)
+    address = models.CharField(max_length=500, null=True, blank=True)
     course = models.ForeignKey(Course, on_delete=models.PROTECT)
-    name_course = models.CharField(max_length=300, null=False)
     created = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
+        user = User.objects.get(username=self.username)
+        customer = Customer.objects.get(user=user)
+        self.first_name = user.first_name
+        self.last_name = user.last_name
+        self.tel = customer.tel
+        self.address = customer.address
         super(PaidCourses, self).save(*args, **kwargs)
         self.course.update_students_count()
 
     def __str__(self):
         return str(self.id)
+    
+    class Meta:
+        verbose_name_plural = "Danh sách user đã thanh toán"
 
 
 class Blog(models.Model):
@@ -98,6 +110,7 @@ class Blog(models.Model):
 
     class Meta:
         ordering = ('-public_day',)
+        verbose_name_plural = "Blog chia sẻ mẹo"
 
 
 class Comment(models.Model):
@@ -113,6 +126,10 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
     
+    class Meta:
+        verbose_name_plural = "Comment trong khóa học"
+    
+    
 
 class Blogcomment(models.Model):
     content = models.TextField()
@@ -126,6 +143,9 @@ class Blogcomment(models.Model):
 
     def __str__(self):
         return self.content
+    
+    class Meta:
+        verbose_name_plural = "Comment trong blog"
 
     
 class Contact(models.Model):
@@ -136,4 +156,7 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name_plural = "Tin nhắn liên hệ"
     

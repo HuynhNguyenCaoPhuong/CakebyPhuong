@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 from environ import Env
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y=0wqb!ylz^j-!0@144g9+1z$i$@_70if#n3&obd(9*f*rl*&d'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -82,12 +84,8 @@ WSGI_APPLICATION = 'CakebyPhuong.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'CakebyPhuongDB',     # Tên cơ sở dữ liệu
-        'USER': 'tendangnhap',  # Tên đăng nhập MySQL
-        'PASSWORD': 'matkhau',  # Mật khẩu MySQL
-        'HOST': 'localhost',  # Địa chỉ máy chủ MySQL, có thể là 'localhost' hoặc '127.0.0.1'
-        'PORT': '3306',       # Cổng MySQL, mặc định là '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -154,7 +152,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'caophuong.viettech@gmail.com'
-EMAIL_HOST_PASSWORD = 'qrvrqxfyovebgomh'  # os.environ['password_key'] suggested
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')  # os.environ['password_key'] suggested
 EMAIL_USE_TLS = True
 
 PASSWORD_RESET_TIMEOUT = 14400

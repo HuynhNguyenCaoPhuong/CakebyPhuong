@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.core.paginator import Paginator
-from . models import Category, Course, Blog, Comment, Contact, Blogcomment
+from . models import Category, Course, Blog, Comment, Contact, Blogcomment, PaidCourses
+
 from users.models import User
 from . form import FormContact, FormComment, FormBlogcomment
-
 
 cats = Category.objects.all()
 
@@ -49,14 +51,17 @@ def category(request, slug):
 
 def single(request, id):
     course = Course.objects.get(id=id)
+    paid_course = PaidCourses.objects.filter(course=course)
     category = Category.objects.get(id=course.category_id)
     recent_courses = Course.objects.all()[:3]
 
+
     comments = Comment.objects.filter(course=course)
     comment_number = comments.count()
-
     
     form = FormComment()
+
+
     if request.POST.get('button-submit'):
         form = FormComment(request.POST, request.FILES, Comment)
         if form.is_valid():
@@ -71,6 +76,15 @@ def single(request, id):
                 comment.image = request.FILES['image']
             comment.save()
             return redirect('classes:single', id=course.id)
+        
+    if course.is_free == False and not request.user.username:
+        messages.warning(request,"Vui lòng đăng nhập để tham gia khóa học")
+        return redirect('users:login')
+        
+    if course.is_free == False and request.user.username and not paid_course.filter(username=request.user.username).exists():
+        messages.error(request, f'Vui lòng thanh toán học phí để được tham gia khóa học')
+        return redirect('classes:index')
+    
 
     return render(request, 'classes/single.html', {
         'course': course,

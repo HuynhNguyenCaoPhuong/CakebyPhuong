@@ -87,8 +87,13 @@
                                     <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>{{ course.vote }} <small></small></h6>
                                     {% if course.price|floatformat:0|intcomma == "0" %}
                                         <h5 class="m-0">Miễn phí</h5>
-                                    {% else %}
+                                    {% elif course.price_origin|floatformat:0|intcomma == "0" %}
                                         <h5 class="m-0">{{ course.price|floatformat:0|intcomma }} VNĐ</h5>
+                                    {% else %}
+                                        <div style="display: flex; align-items: center">
+                                            <h6 class="text-muted m-0" style="padding-right: 6px"><del>{{ course.price_origin|floatformat:0|intcomma }} VNĐ</del></h6>
+                                            <h5 class="text-muted m-0">{{ course.price|floatformat:0|intcomma }} VNĐ</h5>
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>

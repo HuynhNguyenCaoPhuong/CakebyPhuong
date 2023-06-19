@@ -16,3 +16,4 @@ class Customer(models.Model):
     
     class Meta:
         db_table = u'customers'
+        verbose_name_plural = "Thông tin thêm của thành viên"
