@@ -1,0 +1,103 @@
+{% extends 'classes/base.html' %}
+{% block title %}My account | Tài khoản của tôi{% endblock title %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Tài khoản của tôi</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Tài khoản của tôi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+    <!-- My Account Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="mb-5">
+                        <div class="tab-content">
+                            {{ result|safe }}
+                            <h3  class="text-primary">Cập nhật thông tin người dùng</h3>
+                            <div class="media mb-2">
+                                <img src="{{ user.customer.avatar.url }}" alt="Avatar" class="img-fluid rounded-circle mr-3 mt-1 mx-auto" style="width: 250px">
+                            </div>
+                            <div class="mb-4 text-center">Ảnh đại diện</div>
+                            <div class="row col-lg-12 mb-5">
+                                <div class="contact-form bg-light p-30 col-lg-12 mb-5">
+                                    <form class="row" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="control-group col-lg-12 mb-5">
+                                            <div class="input-group" style="justify-content: center">
+                                                <input type="file" id="avatar" name="avatar" accept="image/*" aria-describedby="inputGroupFileAddon" style="width: 210px">
+                                            </div>
+                                        </div>
+                                        <div class="control-group col-lg-4 mb-5">
+                                            Họ
+                                            <input class="form-control" name="last_name" type="text" placeholder="{{ user.last_name }}">
+                                        </div>
+                                        <div class="control-group col-lg-4 mb-5">
+                                            Tên
+                                            <input class="form-control" name="first_name" type="text" placeholder="{{ user.first_name }}">
+                                        </div>
+                                        <div class="control-group col-lg-4 mb-5">
+                                            Số điện thoại
+                                            <input class="form-control" name="mobile" type="text" placeholder="{{ user.customer.tel }}">
+                                        </div>
+                                        <div class="control-group col-lg-6 mb-5">
+                                            Email
+                                            <input class="form-control" name="email" type="email" placeholder="{{ user.email }}">
+                                        </div>
+                                        <div class="control-group col-lg-6 mb-5">
+                                            Facebook
+                                            <input class="form-control" name="facebook" type="text" placeholder="{{ user.customer.facebook }}">
+                                        </div>
+                                        <div class="control-group col-lg-12 mb-5">
+                                            Địa chỉ
+                                            <input class="form-control" name="address" type="text" placeholder="{{ user.customer.address }}">
+                                        </div>
+                                        <div class="control-group col-lg-12 text-right mb-5">
+                                            <button class="btn btn-primary py-2 px-4" type="submit" value="update_account" name="btnUpdateUser">Cập nhật tài khoản</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <h3 class="text-primary">Cập nhật mật khẩu</h3>
+                            <div class="row col-lg-12 mb-5">
+                                <div class="contact-form bg-light p-30 col-lg-12 mb-5">
+                                    <form class="row" method="post">
+                                    {% csrf_token %}
+                                        <div class="control-group col-lg-12 mb-5">
+                                            Mật khẩu hiện tại
+                                            <input class="form-control" name="current_password" type="password" placeholder="Current Password">
+                                        </div>
+                                        <div class="control-group col-lg-6 mb-5">
+                                            Mật khẩu mới
+                                            <input class="form-control" name="new_password" type="password" placeholder="New Password">
+                                        </div>
+                                        <div class="control-group col-lg-6 mb-5">
+                                            Xác nhận mật khẩu mới
+                                            <input class="form-control" name="new_password_conf" type="password" placeholder="Confirm Password">
+                                        </div>
+                                        <div class="control-group col-lg-12 text-right mb-5">
+                                            <button class="btn btn-primary py-2 px-4" type="submit" value="update_pass" name="btnUpdatePass">Đổi mật khẩu</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- My Account End -->
+
+{% endblock %}

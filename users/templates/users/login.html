@@ -1,0 +1,66 @@
+{% extends 'classes/base.html' %}
+{% block title %}Login | Đăng nhập{% endblock %}
+{% load static %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Đăng nhập</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Đăng nhập</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Login Start -->
+    <div class="container-fluid bg-registration py-5" style="margin: 90px 0;">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-7 mb-5 mb-lg-0">
+                    <div class="mb-4">
+                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Bắt đầu học thôi nào</h5>
+                        <h1 class="text-white">Nội dung luôn được cập nhật liên tục</h1>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="card border-0">
+                        <div class="card-header bg-light text-center p-4">
+                            <h1 class="m-0">Đăng nhập</h1>
+                        </div>
+                        <div class="card-body rounded-bottom bg-primary p-5">
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ result|safe }}
+                                <div class="form-group">
+                                    <input class="form-control border-0 p-4" type="text" name= "email" placeholder="Username / Tên đăng nhập">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control border-0 p-4" type="password" name= "password" placeholder="Mật khẩu">
+                                </div>
+                                <small class="text-right d-block mb-2">
+                                    <a href="{% url 'users:password_reset' %}" class="text-white">Quên mật khẩu?</a>
+                                </small>
+                                <!-- <div class="form-group">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="newaccount">
+                                        <label class="custom-control-label" for="newaccount">Giữ đăng nhập</label>
+                                    </div>
+                                </div> -->
+                                <div>
+                                    <button class="btn btn-dark btn-block border-0 py-3" type="submit" name="btnLogin" value="Login">Đăng nhập</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+{% endblock content %}

@@ -1,0 +1,220 @@
+{% extends 'classes/base.html' %}
+{% load static %}
+{% block tittle %}Blog Detail | Chia sẻ chi tiết {% endblock tittle %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">{{ blog.name }}</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Blog</p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">{{ blog.name }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-4 mt-5 mt-lg-0 d-none d-sm-none d-md-none d-lg-block d-xl-block">
+                    <!-- Recent Post -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bài viết mới</h3>
+                        {% for blog in recent_blogs %}
+                        <a class="d-flex align-items-center text-decoration-none mb-3" href="{% url 'classes:index' %}tip/{{ blog.id }}">
+                            <img class="img-fluid rounded" style="width: 80px" src="{{ blog.image_blog.url }}" alt="{{ blog.name }}">
+                            <div class="pl-3">
+                                <h6 class="m-1">{{ blog.name }}</h6>
+                                <small style="padding-left: 3px">{{ blog.public_day|date:"d-m-Y" }}</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Tag Cloud -->
+                    <!-- <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Tag Cloud</h3>
+                        <div class="d-flex flex-wrap m-n1">
+                            <a href="" class="btn btn-outline-primary m-1">Design</a>
+                            <a href="" class="btn btn-outline-primary m-1">Development</a>
+                            <a href="" class="btn btn-outline-primary m-1">Marketing</a>
+                            <a href="" class="btn btn-outline-primary m-1">SEO</a>
+                            <a href="" class="btn btn-outline-primary m-1">Writing</a>
+                            <a href="" class="btn btn-outline-primary m-1">Consulting</a>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="col-lg-8">
+                    <div class="mb-5">
+                        {% if blog.video == "" or blog.video is blank %}
+                        <div></div>
+                        {% else %}
+                            <div class="text-center mb-5">
+                                <iframe width="700" height="450" src="https://www.youtube.com/embed/{{ blog.video }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                            </div>
+                            {% endif %}
+                            <div class="ckeditor-content">
+                                {{ blog.describe|safe }}
+                            </div>
+                        <h6 class="text-primary font-italic mb-3">Ngày viết: {{ blog.public_day|date:"d-m-Y" }}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <!-- Comment List -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">{{ comment_number }} Bình luận</h3>
+                        {% for comment in comments %}
+                        <div class="media mb-4">
+                            <img src="{{ comment.user_avatar.url }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                style="width: 45px;">
+                            <div class="media-body">
+                                <h6>{{ comment.user_last_name }} {{ comment.user_first_name }}  <small><i>{{ comment.created_at }}</i></small></h6>
+                                <p style="overflow-wrap: anywhere">{{ comment.content }}</p>
+                                <button class="btn btn-sm btn-secondary" data-toggle="collapse" data-target="#comment{{ comment.id }}">Trả lời</button>
+                                {% if request.user.username %}
+                                <!-- Reply Form -->
+                                <div class="bg-secondary rounded p-5 collapse" id="comment{{ comment.id }}" style="margin-top: 10px">
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            {{ form.content }}
+                                            <input type="hidden" name="blog" value="{{ blog.id }}">
+                                            <input type="hidden" name="user" value="{{ request.user.id }}">
+                                            <input type="hidden" name="user_first_name" value="{{ request.user.first_name }}">
+                                            <input type="hidden" name="user_last_name" value="{{ request.user.last_name }}">
+                                            <input type="hidden" name="user_avatar" value="{{ request.user.customer.avatar }}">
+                                            <input type="hidden" name="parent_comment" value="{{ comment.id }}">
+                                        </div>
+                                        <div class="form-group mb-0">
+                                            <div style="width: 210px; margin-top: 6px; display: inline-block">
+                                                {{ form.image }}
+                                            </div>
+                                            <button type="submit" value="submit" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold" name="button-submit" style="float: right">Gửi</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% if comment.image %}
+                                <img src="{{ comment.image.url }}" alt="Image" class="img-fluid" style="height: 67px">
+                            {% else %}
+                                <div></div>
+                            {% endif %}
+                        </div>
+                        {% for reply in replys %}
+                            {% if reply.parent_comment.id == comment.id %}
+                            <div class="media mb-4" style="margin-left: 61px">
+                                <img src="{{ reply.user_avatar.url }}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                                    style="width: 45px;">
+                                <div class="media-body">
+                                    <h6>{{ reply.user_last_name }} {{ reply.user_first_name }}  <small><i>{{ reply.created_at }}</i></small></h6>
+                                    <p style="overflow-wrap: anywhere">{{ reply.content }}</p>
+                                </div>
+                                {% if reply.image %}
+                                    <img src="{{ reply.image.url }}" alt="Image" class="img-fluid" style="height: 67px">
+                                {% else %}
+                                    <div></div>
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% if comment_number > 10 %}
+                    <div class="col-12">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination pagination-md justify-content-center mb-0">
+                                {% if comments.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ comments.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+    
+    
+                                {% if comments.number > 5 %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">
+                                        ...
+                                    </a>
+                                </li>
+                                {% endif %}
+                                
+    
+                                {% for i in comments.paginator.page_range %}
+                                    {% if i > comments.number|add:"-5" %}
+                                        {% if i < comments.number|add:"5" %}
+                                            {% if comments.number == i %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+    
+    
+                                {% if comments.number < comments.paginator.num_pages|add:"-4" %}
+                                <li class="page-item disabled">
+                                    <a class="page-link" href="#">
+                                        ...
+                                    </a>
+                                </li>
+                                {% endif %}
+    
+                                
+                                {% if comments.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ comments.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                    {% endif %}
+                    {% if request.user.username %}
+                    <!-- Comment Form -->
+                    <div class="bg-secondary rounded p-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Bình luận</h3>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ form.content }}
+                                <input type="hidden" name="blog" value="{{ blog.id }}">
+                                <input type="hidden" name="user" value="{{ request.user.id }}">
+                                <input type="hidden" name="user_first_name" value="{{ request.user.first_name }}">
+                                <input type="hidden" name="user_last_name" value="{{ request.user.last_name }}">
+                                <input type="hidden" name="user_avatar" value="{{ request.user.customer.avatar }}">
+                            </div>
+                            <div class="form-group mb-0">
+                                <div style="width: 210px; margin-top: 6px; display: inline-block">
+                                    {{ form.image }}
+                                </div>
+                                <button type="submit" value="submit" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold" name="button-submit" style="float: right">Gửi</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Detail End -->
+
+
+{% endblock content %}

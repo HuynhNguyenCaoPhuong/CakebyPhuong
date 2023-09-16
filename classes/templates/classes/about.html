@@ -1,0 +1,82 @@
+{% extends 'classes/base.html' %}
+{% load static %}
+{% block title %}About | Lời giới thiệu{% endblock title %}
+{% block content %}
+    <!-- Header Start -->
+    <div class="container-fluid page-header" style="margin-bottom: 90px;">
+        <div class="container">
+            <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+                <h3 class="display-4 text-white text-uppercase">Lời giới thiệu</h3>
+                <div class="d-inline-flex text-white">
+                    <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'classes:index' %}">Trang chủ</a></p>
+                    <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                    <p class="m-0 text-uppercase">Lời giới thiệu</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- About Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-5">
+                    <img class="img-fluid rounded mb-4 mb-lg-0" src="{% static 'img/stawberry-tiramisu.jpg' %}" alt="stawberry-tiramisu">
+                </div>
+                <div class="col-lg-7">
+                    <div class="text-left mb-4">
+                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Lời giới thiệu</h5>
+                        <h1>Chào mừng đến với CakebyPhuong</h1>
+                    </div>
+                    <p>Vào một ngày đẹp trời của tháng 12/2021, mình cảm thấy cần thay đổi một chút gì đó cho cuộc sống trở nên màu sắc hơn, vậy là CakebyPhuong ra đời. CakebyPhuong là nơi mà mình thoả mãn đam mê bánh trái và cũng là nơi mình gặp gỡ, trao đổi, lan toả niềm vui bánh trái với mọi người cùng chung đam mê trên khắp quả đất xinh đẹp này.</p>
+                    <p>Năm 2014, mình bén duyên với bánh chỉ đơn giản là thích ăn bánh kem, nhớ lúc đó mỗi lần sinh nhật mình đều giữ lại một phần bánh kem trong tủ lạnh, để dành, mỗi ngày ăn một hai miếng cho đỡ nghiền, cảm nhận hương thơm và vị ngon của nó. Cảm thấy thật đặc biệt, tự hỏi tại sao người ta lại có thể làm ra một chiếc bánh xinh xắn, lại ngon như vậy. Tò mò, mong muốn được tự tay làm bánh, mình đã chạy xe hơn 100km để học làm bánh vỏn vẹn trong 2 ngày. Và tự rèn dũa thêm vài tuần, mở một tiệm bánh kem online nho nhỏ, bán cho vui, ấy vậy mà được nhiều người ủng hộ lắm, cảm giác vui khi được tự tay tạo ra những chiếc bánh, thấy hạnh phúc khi khách nhận được và khen ngon.</p>
+                    <p>Bẵng đi một thời gian nghỉ bánh vì nhiều lý do, cuối cùng lý do lớn nhất là sức khoẻ đã khiến mình dừng chân. Không bánh, không lò, không bột, bơ, đường đằng đẵng suốt mấy năm trời. Cuối cùng, mình lại bắt đầu với đam mê bằng một cách khác đi, thuận tiện hơn trong công việc và phù hợp hơn với sức khoẻ của mình. Việc chia sẻ những công thức bánh, việc hướng dẫn mọi người làm bánh, việc mở ra những chiếc lớp bánh online bé xinh tạo cho mình niềm vui trở lại với đam mê bánh trái, cũng kiếm được một nguồn thu nhập nhỏ nhỏ để là động lực tiếp tục đi con đường này.</p>
+                    <p class="text-primary">Cảm ơn bạn đã đến với CakebyPhuong, hi vọng bạn ở đây, nhìn thấy được niềm vui, cảm nhận thấy hạnh phúc khi nhìn những chiếc bánh xinh xắn do chính tay bạn làm được. CakebyPhuong – Nơi cùng bạn chia sẻ vị ngọt.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+
+    <!-- Testimonial Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Feedback</h5>
+                <h1>Nhận xét của các học viên</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="owl-carousel testimonial-carousel">
+                        <div class="text-center">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <h5 class="font-weight-normal mb-4">Cảm ơn CakebyPhuong rất nhiều vì những chia sẻ rất nghiêm túc, chính xác, đầy trách nhiệm và yêu thương. Làm theo sự hướng dẫn của bạn mình bị cuốn theo cảm xúc của người hướng dẫn khiến việc làm bánh đối với mình là trải nghiệm niềm hạnh phúc, vui vẻ.</h5>
+                            <img class="img-fluid mx-auto mb-3" src="#" alt="">
+                            <h6 class="m-0">Trần Thị Hạnh</h6>
+                            <!-- <span>Thành viên 01 năm</span> -->
+                        </div>
+                        <div class="text-center">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <h5 class="font-weight-normal mb-4">Nhờ có blog của chị mà mình học hỏi được rất nhiều, nhờ cách diễn giải chi tiết mà một người chưa biết gì về bánh như mình cũng có thể làm được. Em cảm thấy càng ngày càng bị cuốn hút với những công thức của chị.</h5>
+                            <img class="img-fluid mx-auto mb-3" src="#" alt="">
+                            <h6 class="m-0">Nguyễn Thị Ngọc</h6>
+                            <!-- <span>Profession</span> -->
+                        </div>
+                        <div class="text-center">
+                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                            <h5 class="font-weight-normal mb-4">Rất cảm ơn em về những chia sẻ vô cùng tỉ mỉ trong các công thức bánh. Càng hâm mộ hơn khi đọc những dòng này vì chị cảm thấy em không chỉ giỏi giang mà còn có một tâm hồn thật đẹp nữa. </h5>
+                            <img class="img-fluid mx-auto mb-3" src="#" alt="">
+                            <h6 class="m-0">Huỳnh Công Nến</h6>
+                            <!-- <span>Profession</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+{% endblock content %}
